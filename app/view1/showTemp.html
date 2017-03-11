@@ -1,0 +1,33 @@
+<toaster-container></toaster-container>
+<section>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="row m-t-n">
+        <div class="col-xs-12">
+          <center>
+            <div class="row wrapper">
+              <h2> IoT Labs </h2>
+              <h3 style="color:#40064c;">Temperature & Humidity Sensor Graph</h3>
+            </div>
+            <div ng-if="baliLoading" ladda="baliLoading"  data-spinner-size="60" data-spinner-color="#9314ad" style="width: 132px;height: 132px;">
+            </div>
+            <div google-chart chart="BaliChart" style="height:100%; width:100%;" ng-if="!baliLoading">
+            </div>
+          </center>
+          <center>
+           <div ng-if="yogyaLoading" ladda="yogyaLoading"  data-spinner-size="60" data-spinner-color="#9314ad" style="width: 132px;height: 132px;">
+            </div>
+            <div google-chart chart="YogyaChart" style="height:100%; width:100%;" ng-if="!yogyaLoading">
+            </div>
+          </center>
+          <center>
+            <div ng-if="bandungLoading" ladda="bandungLoading"  data-spinner-size="60" data-spinner-color="#9314ad" style="width: 132px;height: 132px;">
+            </div>
+            <div google-chart chart="YogyaChart" style="height:100%; width:100%;" ng-if="!bandungLoading">
+            </div>
+          </center>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
