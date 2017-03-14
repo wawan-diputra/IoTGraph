@@ -19,7 +19,7 @@ factory('BaliOffice', function($http) {
     var getData = function() {
 
         // Angular $http() and then() both return promises themselves 
-        return $http({method:"GET", url:"https://mvrj9lgiij.execute-api.ap-southeast-2.amazonaws.com/dev/list"}).then(function(result){
+        return $http({method:"GET", url:"https://gpiryeyzbf.execute-api.ap-southeast-2.amazonaws.com/dev/list"}).then(function(result){
 
             // What we return here is the data that will be accessible 
             // to us after the promise resolves
@@ -33,7 +33,7 @@ factory('YogyakartaOffice', function($http) {
     var getData = function() {
 
         // Angular $http() and then() both return promises themselves 
-        return $http({method:"GET", url:"https://mvrj9lgiij.execute-api.ap-southeast-2.amazonaws.com/dev/list"}).then(function(result){
+        return $http({method:"GET", url:"https://xi287ra6g9.execute-api.ap-southeast-2.amazonaws.com/dev/list"}).then(function(result){
 
             // What we return here is the data that will be accessible 
             // to us after the promise resolves
@@ -47,7 +47,7 @@ factory('BandungOffice', function($http) {
     var getData = function() {
 
         // Angular $http() and then() both return promises themselves 
-        return $http({method:"GET", url:"https://mvrj9lgiij.execute-api.ap-southeast-2.amazonaws.com/dev/list"}).then(function(result){
+        return $http({method:"GET", url:"https://gpiryeyzbf.execute-api.ap-southeast-2.amazonaws.com/dev/list"}).then(function(result){
 
             // What we return here is the data that will be accessible 
             // to us after the promise resolves

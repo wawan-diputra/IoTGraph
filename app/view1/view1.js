@@ -14,36 +14,44 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
 ,function($http, $scope,$timeout,BaliOffice,YogyakartaOffice,BandungOffice) {
     
     
-    function getTempData($scope, myService, officeLoc) {
-        var myDataPromise = myService.getData();
-        console.log(JSON.stringify(myDataPromise));
-        myDataPromise.then(function(result) {  
-            result.Items.forEach(function(xdata){
-            var chartData = [];
-              chartData.push(xdata.timeStamp);
-              chartData.push(xdata.payload.state.reported.temp);
-              chartData.push(xdata.payload.state.reported.temp);
-              chartData.push(xdata.payload.state.reported.humidity);
-              chartData.push(xdata.payload.state.reported.humidity);
-              switch (officeLoc){
-                case 'Bali':
-                  $scope.BaliChart.data.push(chartData);
-                  $scope.BaliChart.data.splice(31,$scope.BaliChart.data.length-30);
-                  $scope.baliLoading = false;
-                  break;
-                case 'Yogyakarta':
-                  $scope.YogyaChart.data.push(chartData);
-                  $scope.YogyaChart.data.splice(3,$scope.YogyaChart.data.length-3);
-                  $scope.yogyaLoading = false;
-                default:
-                  $scope.BandungChart.data.push(chartData);
-                  $scope.BandungChart.data.splice(15,$scope.BandungChart.data.length-15);
-                  $scope.bandungLoading = false;     
-              }
-          });
+    function getBaliData($scope, baliService) {
+        var baliData = baliService.getData();
+
+        baliData.then(function(result) {  
+            result.body.forEach(function(bdata){
+              // console.log('WWZ1:',JSON.stringify(bdata.id));
+                var chartData = [];
+                chartData.push(bdata.id);
+                chartData.push(bdata.payload.temp);
+                chartData.push(bdata.payload.temp);
+                chartData.push(bdata.payload.humidity);
+                chartData.push(bdata.payload.humidity);
+                $scope.BaliChart.data.push(chartData);
+                $scope.BaliChart.data.splice(31,$scope.BaliChart.data.length-30);
+                $scope.baliLoading = false;
+              });
         });
     }
-    
+
+    function getJogjaData($scope, jogjaService, officeLoc) {
+        var jogjaData = jogjaService.getData();
+
+        jogjaData.then(function(result) {  
+          console.log('WWZ1:',JSON.stringify(result));
+            result.Items.forEach(function(jdata){
+              
+                var chartData = [];
+                chartData.push(jdata.id);
+                chartData.push(jdata.payload.temp);
+                chartData.push(jdata.payload.temp);
+                chartData.push(jdata.payload.humidity);
+                chartData.push(jdata.payload.humidity);
+                $scope.YogyaChart.data.push(chartData);
+                $scope.YogyaChart.data.splice(31,$scope.YogyaChart.data.length-30);
+                $scope.yogyaLoading = false;
+              });
+        });
+    }    
     // *********************************
     // Load Bali Office Data
     $scope.baliLoading = true;
@@ -54,7 +62,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
             [ 'Date', 'Temperature',{ role: 'Temperature' }, 'Humidity',{ role: 'Humidity' }]
         ];
 
-        getTempData($scope,BaliOffice,'Bali');
+        getBaliData($scope,BaliOffice);
 
         $scope.BaliChart.options = {
           titleTextStyle: {
@@ -63,8 +71,9 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
             bold: true,
           },
           fontSize: 10,
-          legend:{ position:'bottom' },
+          legend:{ position:'right' },
           title: 'Mitrais - Bali Office',
+          backgroundColor: { fill:'transparent' }
         };
     };
     $scope.loadBaliChart(40);
@@ -74,12 +83,12 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
     $scope.yogyaLoading = true;
     $scope.loadYogyaChart = function () {
         $scope.YogyaChart = {};
-        $scope.YogyaChart.type = 'LineChart';
+        $scope.YogyaChart.type = 'AreaChart';
         $scope.YogyaChart.data = [
             [ 'Date', 'Temperature',{ role: 'Temperature' }, 'Humidity',{ role: 'Humidity' }]
         ];
         
-        getTempData($scope,YogyakartaOffice,'Yogyakarta');
+        getJogjaData($scope,YogyakartaOffice,'Yogyakarta');
         $scope.YogyaChart.options = {
           titleTextStyle: {
             fontName: 'Verdana',
@@ -87,35 +96,36 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
             bold: true,
           },
           fontSize: 10,
-          legend:{ position:'bottom' },
+          legend:{ position:'right' },
           title: 'Mitrais - Yogyakarta Office',
+          backgroundColor: { fill:'transparent' }
         };
     };
     $scope.loadYogyaChart(40);
 
-    // *********************************
-    // Load Bandung Office Data
-    $scope.bandungLoading = true;
-    $scope.loadBandungChart = function () {
-        $scope.BandungChart = {};
-        $scope.BandungChart.type = 'LineChart';
-        $scope.BandungChart.data = [
-            [ 'Date', 'Temperature',{ role: 'Temperature' }, 'Humidity',{ role: 'Humidity' }]
-        ];
+    // // *********************************
+    // // Load Bandung Office Data
+    // $scope.bandungLoading = true;
+    // $scope.loadBandungChart = function () {
+    //     $scope.BandungChart = {};
+    //     $scope.BandungChart.type = 'ColumnChart';
+    //     $scope.BandungChart.data = [
+    //         [ 'Date', 'Temperature',{ role: 'Temperature' }, 'Humidity',{ role: 'Humidity' }]
+    //     ];
 
-        getTempData($scope,BandungOffice,'Bandung');
+    //     getTempData($scope,BandungOffice,'Bandung');
 
-        $scope.BandungChart.options = {
-          titleTextStyle: {
-            fontName: 'Verdana',
-            fontSize: 18,
-            bold: true,
-          },
-          fontSize: 10,
-          legend:{ position:'bottom' },
-          title: 'Mitrais - Bandung Office',
-        };
-    };
-    $scope.loadBandungChart(40);
+    //     $scope.BandungChart.options = {
+    //       titleTextStyle: {
+    //         fontName: 'Verdana',
+    //         fontSize: 18,
+    //         bold: true,
+    //       },
+    //       fontSize: 10,
+    //       legend:{ position:'right' },
+    //       title: 'Mitrais - Bandung Office',
+    //     };
+    // };
+    // $scope.loadBandungChart(40);
 
   }]);

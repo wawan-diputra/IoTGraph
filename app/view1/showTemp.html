@@ -1,32 +1,44 @@
 <section>
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-      <div class="row m-t-n">
-        <div class="col-xs-12">
-          <center>
-            <div class="row wrapper">
-              <h2> IoT Labs </h2>
-              <h3 style="color:#40064c;">Temperature & Humidity Sensor Graph</h3>
+   <div  class="gray-bg dashbard-1" style="min-height: 616px;">
+      <div class="row border-bottom">
+         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+               <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> Reload Graphs</a>
             </div>
-            <div ng-if="baliLoading" ladda="baliLoading"  data-spinner-size="60" data-spinner-color="#9314ad" style="width: 132px;height: 132px;">
+            <ul class="nav navbar-top-links navbar-right">
+               <li>
+                  <span class="m-r-sm text-muted welcome-message">Hi Guest, Welcome to Mitrais IoT Labs Dashboard.</span>
+               </li>
+               <li>
+                  <a class="right-sidebar-toggle">
+                  <i class="fa fa-tasks"></i>
+                  </a>
+               </li>
+            </ul>
+         </nav>
+      </div>
+      <div class="ibox-tools">
+         <center>
+            <div ng-if="baliLoading" ladda="baliLoading"  data-spinner-size="60" data-spinner-color="#7b00e0" style="width: 132px;height: 132px;">
             </div>
             <div google-chart chart="BaliChart" style="height:100%; width:100%;" ng-if="!baliLoading">
             </div>
-          </center>
-          <center>
-           <div ng-if="yogyaLoading" ladda="yogyaLoading"  data-spinner-size="60" data-spinner-color="#9314ad" style="width: 132px;height: 132px;">
+         </center>
+         </br>
+         <center>
+            <div ng-if="yogyaLoading" ladda="yogyaLoading"  data-spinner-size="60" data-spinner-color="#7b00e0" style="width: 132px;height: 132px;">
             </div>
             <div google-chart chart="YogyaChart" style="height:100%; width:100%;" ng-if="!yogyaLoading">
             </div>
-          </center>
-          <center>
-            <div ng-if="bandungLoading" ladda="bandungLoading"  data-spinner-size="60" data-spinner-color="#9314ad" style="width: 132px;height: 132px;">
+         </center>
+         </br>
+         <center>
+            <div ng-if="bandungLoading" ladda="bandungLoading"  data-spinner-size="60" data-spinner-color="#7b00e0" style="width: 132px;height: 132px;">
             </div>
             <div google-chart chart="BandungChart" style="height:100%; width:100%;" ng-if="!bandungLoading">
             </div>
-          </center>
-        </div>
+         </center>
       </div>
-    </div>
-</div>
+   </div>
+
 </section>
