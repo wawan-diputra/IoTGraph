@@ -23,22 +23,37 @@
             </div>
             <div google-chart chart="BaliChart" style="height:100%; width:100%;" ng-if="!baliLoading">
             </div>
+            <br>
+        <div ng-if="!baliLoading">
+             <button class="btn btn-primary " ng-click="refreshbalilamp()" >Refresh Light</button>
+             <b>Status :</b> {{baliLightStatus}}
+        </div>
+            <br>
+         <button class="btn btn-primary " ng-click="baliRelay1('devicebali','1')" ng-if="!baliLoading">{{baliLampStatus1}}</button>
+         <button class="btn btn-primary " ng-click="baliRelay2('devicebali','2')" ng-if="!baliLoading">{{baliLampStatus2}}</button>
          </center>
-         </br>
+         <hr>
          <center>
             <div ng-if="yogyaLoading" ladda="yogyaLoading"  data-spinner-size="60" data-spinner-color="#7b00e0" style="width: 132px;height: 132px;">
             </div>
             <div google-chart chart="YogyaChart" style="height:100%; width:100%;" ng-if="!yogyaLoading">
             </div>
+        </br>
+         <button class="btn btn-primary " ng-click="jogjaRelay1('devicejogja','1')" ng-if="!yogyaLoading">{{jogjaLampStatus1}}</button>
+         <button class="btn btn-primary " ng-click="jogjaRelay2('devicejogja','2')" ng-if="!yogyaLoading">{{jogjaLampStatus2}}</button>
          </center>
-         </br>
+         <hr>
          <center>
             <div ng-if="bandungLoading" ladda="bandungLoading"  data-spinner-size="60" data-spinner-color="#7b00e0" style="width: 132px;height: 132px;">
             </div>
             <div google-chart chart="BandungChart" style="height:100%; width:100%;" ng-if="!bandungLoading">
             </div>
+            <br>
+         <button class="btn btn-primary " ng-click="bandungRelay1('devicebandung','1')" ng-if="!bandungLoading">{{bandungLampStatus1}}</button>
+         <button class="btn btn-primary " ng-click="bandungRelay2('devicebandung','2')" ng-if="!bandungLoading">{{bandungLampStatus2}}</button>
          </center>
       </div>
+      <div>
+      </div>
    </div>
-
 </section>

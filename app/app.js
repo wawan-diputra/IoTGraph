@@ -47,7 +47,21 @@ factory('BandungOffice', function($http) {
     var getData = function() {
 
         // Angular $http() and then() both return promises themselves 
-        return $http({method:"GET", url:"https://gpiryeyzbf.execute-api.ap-southeast-2.amazonaws.com/dev/list"}).then(function(result){
+        return $http({method:"GET", url:"https://8j2w1z2y0f.execute-api.ap-southeast-2.amazonaws.com/dev/list"}).then(function(result){
+
+            // What we return here is the data that will be accessible 
+            // to us after the promise resolves
+            return result.data;
+        });
+    };
+    return { getData: getData };
+}).
+factory('BaliLight', function($http) {
+
+    var getData = function() {
+
+        // Angular $http() and then() both return promises themselves 
+        return $http({method:"GET", url:"https://sv7tsfvbm3.execute-api.ap-southeast-2.amazonaws.com/dev/lampdata"}).then(function(result){
 
             // What we return here is the data that will be accessible 
             // to us after the promise resolves
