@@ -22,14 +22,23 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
               // console.log('WWZ1:',JSON.stringify(bdata.id));
                 var chartData = [];
                 chartData.push(bdata.id);
+                
                 chartData.push(bdata.payload.temp);
                 chartData.push(bdata.payload.temp);
                 chartData.push(bdata.payload.humidity);
                 chartData.push(bdata.payload.humidity);
                 $scope.BaliChart.data.push(chartData);
+                $scope.BaliChart.data.sort(function (a, b) {
+                    if (a[0] < b[0]) return  1;
+                    if (a[0] > b[0]) return -1;
+                    if (a[2] > b[2]) return  1;
+                    if (a[2] < b[2]) return -1;
+                    return 0;
+                });                
                 $scope.BaliChart.data.splice(31,$scope.BaliChart.data.length-30);
                 $scope.baliLoading = false;
               });
+              console.log('FullData:',$scope.BaliChart.data);
         });
     }
 
@@ -37,7 +46,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
         var jogjaData = jogjaService.getData();
 
         jogjaData.then(function(result) {  
-          console.log('WWZ1:',JSON.stringify(result));
+          // console.log('WWZ1:',JSON.stringify(result));
             result.Items.forEach(function(jdata){
               
                 var chartData = [];
@@ -47,6 +56,13 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
                 chartData.push(jdata.payload.humidity);
                 chartData.push(jdata.payload.humidity);
                 $scope.YogyaChart.data.push(chartData);
+                $scope.YogyaChart.data.sort(function (a, b) {
+                    if (a[0] < b[0]) return  1;
+                    if (a[0] > b[0]) return -1;
+                    if (a[2] > b[2]) return  1;
+                    if (a[2] < b[2]) return -1;
+                    return 0;
+                });   
                 $scope.YogyaChart.data.splice(31,$scope.YogyaChart.data.length-30);
                 $scope.yogyaLoading = false;
               });
@@ -83,7 +99,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
     $scope.yogyaLoading = true;
     $scope.loadYogyaChart = function () {
         $scope.YogyaChart = {};
-        $scope.YogyaChart.type = 'AreaChart';
+        $scope.YogyaChart.type = 'LineChart';
         $scope.YogyaChart.data = [
             [ 'Date', 'Temperature',{ role: 'Temperature' }, 'Humidity',{ role: 'Humidity' }]
         ];
