@@ -112,7 +112,24 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
             [ 'Date', 'Temperature',{ role: 'Temperature' }, 'Humidity',{ role: 'Humidity' }]
         ];
 
-        getBaliData($scope,BaliOffice);
+        // Function to replicate setInterval using $timeout service.
+        $scope.intervalFunction = function(){
+          $timeout(function() {
+            $scope.getData();
+            $scope.intervalFunction();
+          }, 1000)
+        };
+        
+        // Function to replicate setInterval using $timeout service.
+        $scope.intervalFunction = function(){
+          $timeout(function() {
+            getBaliData($scope,BaliOffice).then(function() {
+              $scope.intervalFunction();
+            });
+          }, 1000)
+        };
+
+        $scope.intervalFunction();
 
         $scope.BaliChart.options = {
           titleTextStyle: {
