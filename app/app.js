@@ -7,7 +7,10 @@ angular.module('myApp', [
   'myApp.view2',
   'myApp.version',
   'googlechart',
-  'angular-ladda'
+  'angular-ladda', 
+  'ngAnimate', 
+  'ngMaterial', 
+  'ngAria'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');

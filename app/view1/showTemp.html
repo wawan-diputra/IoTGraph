@@ -21,16 +21,30 @@
          <center>
             <div ng-if="baliLoading" ladda="baliLoading"  data-spinner-size="60" data-spinner-color="#7b00e0" style="width: 132px;height: 132px;">
             </div>
-            <div google-chart chart="BaliChart" style="height:100%; width:100%;" ng-if="!baliLoading">
+            <div class="row" style=" float: none; margin: 0 auto; ">
+               <div class="col-md-2">
+                 <div ng-if="!baliLoading" style="margin-left: 20px;">
+                    <md-switch ng-model="baliLightStatus" aria-label="Switch 1" ng-disabled="true">
+                        <b>Light Status</b> 
+                    </md-switch>
+                 </div>
+                  <div ng-if="!baliLoading" style="margin-left: 20px;">
+                    <md-switch ng-model="baliLampStatus1" aria-label="Switch 1" 
+                    ng-change="baliRelay1('devicebali','1')">
+                        <b>Relay 1</b> 
+                    </md-switch>
+                  </div>
+                  <div ng-if="!baliLoading" style="margin-left: 20px;">
+                    <md-switch ng-model="baliLampStatus2" aria-label="Switch 2" 
+                    ng-change="baliRelay2('devicebali','2')">
+                        <b>Relay 2</b> 
+                    </md-switch>
+                  </div>
+               </div>
+               <div class="col-md-10">
+                  <div google-chart chart="BaliChart" style="height:100%; width:100%;" ng-if="!baliLoading"></div>
+               </div>
             </div>
-            <br>
-        <div ng-if="!baliLoading">
-             <button class="btn btn-primary " ng-click="refreshbalilamp()" >Refresh Light</button>
-             <b>Status :</b> {{baliLightStatus}}
-        </div>
-            <br>
-         <button class="btn btn-primary " ng-click="baliRelay1('devicebali','1')" ng-if="!baliLoading">{{baliLampStatus1}}</button>
-         <button class="btn btn-primary " ng-click="baliRelay2('devicebali','2')" ng-if="!baliLoading">{{baliLampStatus2}}</button>
          </center>
          <hr>
          <center>
