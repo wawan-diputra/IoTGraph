@@ -264,7 +264,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda'])
         BaliLightData.then(function(result) {  
             result.Items.forEach(function(jdata){
               jdata.lightpayload.forEach(function(value){
-                if (value.lightState == 1) {
+                if (value.lightState == 0) {
                   $scope.baliLightStatus = 'Turned ON'
                 }else{
                   $scope.baliLightStatus = 'Turned OFF'
