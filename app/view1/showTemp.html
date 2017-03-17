@@ -52,6 +52,11 @@
             </div>
             <div class="row" style=" float: none; margin: 0 auto; ">
                <div class="col-md-2">
+                 <div ng-if="!yogyaLoading" style="margin-left: 20px;">
+                    <md-switch ng-model="jogjaLightStatus" aria-label="Switch 1" ng-disabled="true">
+                        <b>Light Status</b> 
+                    </md-switch>
+                 </div>
                   <div ng-if="!yogyaLoading" style="margin-left: 20px;">
                     <md-switch ng-model="jogjaLampStatus1" aria-label="Switch 1" 
                     ng-change="baliRelay1jogjaRelay1('devicejogja','1')">

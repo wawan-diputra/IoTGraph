@@ -10,8 +10,8 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
 
 }])
 
-.controller('View1Ctrl',['$http', '$scope','$timeout','BaliOffice','YogyakartaOffice','BandungOffice','BaliLight','_'
-,function($http, $scope,$timeout,BaliOffice,YogyakartaOffice,BandungOffice,BaliLight, _) {
+.controller('View1Ctrl',['$http', '$scope','$timeout','BaliOffice','YogyakartaOffice','BandungOffice','BaliLight','JogjaLight','_'
+,function($http, $scope,$timeout,BaliOffice,YogyakartaOffice,BandungOffice,BaliLight,JogjaLight, _) {
 
     $scope.baliLampStatus1    = false;
     $scope.baliLampStatus2    = false;
@@ -82,7 +82,6 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
     } 
 
     function getBandungData($scope, service, callback) {
-      debugger
         var bandungData = service.getData();
 
         bandungData.then(function(result) {  
@@ -352,5 +351,33 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
     };
 
     $scope.refreshbalilamp();
+
+    function getJogjaLightData($scope, lightService, callback) {
+        var lightData = lightService.getData();
+        lightData.then(function(result) {  
+            result.Items.forEach(function(jdata){
+              jdata.lightpayload.forEach(function(value){
+                if (value.lightState == 1) {
+                  $scope.jogjaLightStatus = true;
+                }else{
+                  $scope.jogjaLightStatus = false;
+                }
+              })
+           });
+        }).then(function () {
+          if (typeof callback === "function") callback();
+        });
+    } 
+
+    // Function to replicate setInterval using $timeout service.
+    $scope.refreshJogjalamp = function(){
+      $timeout(function() {
+        getJogjaLightData($scope, JogjaLight, function () {
+          $scope.refreshJogjalamp();
+        });
+      }, 3000)
+    };
+
+    $scope.refreshJogjalamp();
 
 }]);
