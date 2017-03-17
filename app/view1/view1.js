@@ -45,18 +45,19 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
                 chartData.push(bdata.payload.humidity);
                 newBaliChart.push(chartData);
               });      
-                $scope.BaliChart.data = newBaliChart;
-                //var backup = $scope.BaliChart.data[0];
-               // _.sortBy($scope.BaliChart.data, '0');  
-               // $scope.BaliChart.data.reverse();   
+                $scope.BaliChart.data = newBaliChart; 
                 $scope.BaliChart.data.splice(16, $scope.BaliChart.data.length-15);
+                
+                debugger
+                if ($scope.BaliChart.data.length > 0) $scope.baliLoading = false;
+
+
                 $scope.BaliChart.data.splice(0, 1, getChartHeader()); 
-                $scope.baliLoading = false;
-              // console.log('FullData:',$scope.BaliChart.data);
-        }).then(function() {
-          
-          if (typeof callback === 'function') callback();
-        });
+                
+              }).then(function() {
+                
+                if (typeof callback === 'function') callback();
+              });
     }
 
     function getJogjaData($scope, jogjaService, officeLoc) {
