@@ -86,4 +86,20 @@ factory('JogjaLight', function($http) {
         });
     };
     return { getData: getData };
+}).
+factory('BandungLight', function($http) {
+
+    var getData = function() {
+
+        // Angular $http() and then() both return promises themselves 
+        return $http({method:"GET", url:"https://645io97b57.execute-api.ap-southeast-2.amazonaws.com/dev/lampdata"}).then(function(result){
+
+            // What we return here is the data that will be accessible 
+            // to us after the promise resolves
+            return result.data;
+        });
+    };
+    return { getData: getData };
 });
+
+

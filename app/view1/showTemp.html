@@ -83,6 +83,11 @@
             </div>
             <div class="row" style=" float: none; margin: 0 auto; ">
                <div class="col-md-2">
+                 <div ng-if="!bandungLoading" style="margin-left: 20px;">
+                    <md-switch ng-model="bandungLightStatus" aria-label="Switch 1" ng-disabled="true">
+                        <b>Light Status</b> 
+                    </md-switch>
+                 </div>
                   <div ng-if="!bandungLoading" style="margin-left: 20px;">
                     <md-switch ng-model="bandungLampStatus1" aria-label="Switch 1" 
                     ng-change="bandungRelay1('devicebandung','1')">
