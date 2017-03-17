@@ -144,6 +144,13 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
           legend:{ position:'right' },
           curveType: 'function',
           title: 'Mitrais - Bali Office',
+          hAxis: {
+            direction: -1
+          },
+          series: {
+            0: { color: '#6288d5' },
+            1: { color: '#dc3912' }
+          },
           backgroundColor: { fill:'transparent' }
         };
     };
@@ -180,6 +187,13 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
           legend:{ position:'right' },
           curveType: 'function',
           title: 'Mitrais - Yogyakarta Office',
+          hAxis: {
+            direction: -1
+          },
+          series: {
+            0: { color: '#6288d5' },
+            1: { color: '#dc3912' }
+          },
           backgroundColor: { fill:'transparent' }
         };
     };
@@ -218,6 +232,13 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
           legend:{ position:'right' },
           curveType: 'function',
           title: 'Mitrais - Bandung Office',
+          hAxis: {
+            direction: -1
+          },
+          series: {
+            0: { color: '#6288d5' },
+            1: { color: '#dc3912' }
+          },
           backgroundColor: { fill:'transparent' }
         };
     };
