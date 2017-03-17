@@ -13,12 +13,12 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
 .controller('View1Ctrl',['$http', '$scope','$timeout','BaliOffice','YogyakartaOffice','BandungOffice','BaliLight','_'
 ,function($http, $scope,$timeout,BaliOffice,YogyakartaOffice,BandungOffice,BaliLight, _) {
 
-    $scope.baliLampStatus1 = false;
-    $scope.baliLampStatus2 = false;
-    $scope.jogjaLampStatus1 = false;
-    $scope.jogjaLampStatus2 = false;
-    $scope.bandungLampStatus1 = "Turn On Relay 1";
-    $scope.bandungLampStatus2 = "Turn On Relay 2";
+    $scope.baliLampStatus1    = false;
+    $scope.baliLampStatus2    = false;
+    $scope.jogjaLampStatus1   = false;
+    $scope.jogjaLampStatus2   = false;
+    $scope.bandungLampStatus1 = false;
+    $scope.bandungLampStatus2 = false;
 
   $scope.message = 'false';
 
@@ -55,13 +55,12 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
         });
     }
 
-    function getJogjaData($scope, jogjaService, callback) {
-        var jogjaData = jogjaService.getData();
+    function getJogjaData($scope, service, callback) {
+        var jogjaData = service.getData();
 
         jogjaData.then(function(result) {  
             var newChart = [];
             result.Items.forEach(function(bdata){
-              // console.log('WWZ1:',JSON.stringify(bdata.id));
                 var chartData = [];
 
                 var stamp = new Date(bdata.timestamp);
@@ -82,30 +81,30 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
         });
     } 
 
-    function getBandungData($scope, baliService) {
-        var bandungData = baliService.getData();
+    function getBandungData($scope, service, callback) {
+      debugger
+        var bandungData = service.getData();
 
         bandungData.then(function(result) {  
-            result.Items.forEach(function(bgdata){
-              // console.log('WWZ1:',JSON.stringify(bgdata.id));
+            var newChart = [];
+            result.Items.forEach(function(bdata){
                 var chartData = [];
-                chartData.push(bgdata.id);
+
+                var stamp = new Date(bdata.timestamp);
+                chartData.push(stamp.getHours() +":"+stamp.getMinutes()+":"+stamp.getSeconds());
                 
-                chartData.push(bgdata.payload.temp);
-                chartData.push(bgdata.payload.temp);
-                chartData.push(bgdata.payload.humidity);
-                chartData.push(bgdata.payload.humidity);
-                $scope.BandungChart.data.push(chartData);
-                $scope.BandungChart.data.sort(function (a, b) {
-                    if (a[0] < b[0]) return  1;
-                    if (a[0] > b[0]) return -1;
-                    if (a[2] > b[2]) return  1;
-                    if (a[2] < b[2]) return -1;
-                    return 0;
-                });                
-                $scope.BandungChart.data.splice(31,$scope.BaliChart.data.length-30);
-                $scope.bandungLoading = false;
+                chartData.push(bdata.payload.temp);
+                chartData.push(bdata.payload.temp);
+                chartData.push(bdata.payload.humidity);
+                chartData.push(bdata.payload.humidity);
+                newChart.push(chartData);
               });
+                $scope.BandungChart.data = newChart;
+                $scope.BandungChart.data.splice(16, $scope.BandungChart.data.length-15);
+                $scope.BandungChart.data.splice(0, 1, getChartHeader()); 
+                $scope.bandungLoading = false;
+        }).then(function() {
+          if (typeof callback === 'function') callback();
         });
     }
 
@@ -197,7 +196,17 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
             [ 'Date', 'Temperature',{ role: 'Temperature' }, 'Humidity',{ role: 'Humidity' }]
         ];
 
-        getBandungData($scope,BandungOffice,'Bandung');
+
+
+        $scope.intervalBandungChart = function(){
+          $timeout(function() {
+            getBandungData($scope, BandungOffice, function () {
+              $scope.intervalBandungChart();
+            });
+          }, 2000);
+        };
+
+        $scope.intervalBandungChart();
 
         $scope.BandungChart.options = {
           titleTextStyle: {
@@ -207,11 +216,13 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
           },
           fontSize: 10,
           legend:{ position:'right' },
+          curveType: 'function',
           title: 'Mitrais - Bandung Office',
           backgroundColor: { fill:'transparent' }
         };
     };
-    $scope.loadBandungChart(40);
+
+    $scope.loadBandungChart();
 
 
     function sendMessage(deviceLoc,relNo,sentstate) {
@@ -250,44 +261,44 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
     }
     $scope.jogjaRelay1 = function(devName,relayNum) {
       var sentstate;
-      if ($scope.jogjaLampStatus1 == "Turn On Relay 1") {
-          $scope.jogjaLampStatus1 = "Turn Off Relay 1"
+      if ($scope.jogjaLampStatus1 == false) {
+          $scope.jogjaLampStatus1 = true
           sentstate = "ON"
       }else{
-          $scope.jogjaLampStatus1 = "Turn On Relay 1"
+          $scope.jogjaLampStatus1 = false;
           sentstate = "OFF"
       };
       sendMessage (devName,relayNum,sentstate);
     }
     $scope.jogjaRelay2 = function(devName,relayNum) {
       var sentstate;
-      if ($scope.jogjaLampStatus2 == "Turn On Relay 2") {
-          $scope.jogjaLampStatus2 = "Turn Off Relay 2"
+      if ($scope.jogjaLampStatus2 == false) {
+          $scope.jogjaLampStatus2 = true;
           sentstate = "ON"
       }else{
-          $scope.jogjaLampStatus2 = "Turn On Relay 2"
+          $scope.jogjaLampStatus2 = false;
           sentstate = "OFF"
       };
       sendMessage (devName,relayNum,sentstate);
     }
     $scope.bandungRelay1 = function(devName,relayNum) {
       var sentstate;
-      if ($scope.bandungLampStatus1 == "Turn On Relay 1") {
-          $scope.bandungLampStatus1 = "Turn Off Relay 1"
+      if ($scope.bandungLampStatus1 == false) {
+          $scope.bandungLampStatus1 = true;
           sentstate = "ON"
       }else{
-          $scope.bandungLampStatus1 = "Turn On Relay 1"
+          $scope.bandungLampStatus1 = false;
           sentstate = "OFF"
       };
       sendMessage (devName,relayNum,sentstate);
     }
     $scope.bandungRelay2 = function(devName,relayNum) {
       var sentstate;
-      if ($scope.bandungLampStatus2 == "Turn On Relay 2") {
-          $scope.bandungLampStatus2 = "Turn Off Relay 2"
+      if ($scope.bandungLampStatus2 == false) {
+          $scope.bandungLampStatus2 = true;
           sentstate = "ON"
       }else{
-          $scope.bandungLampStatus2 = "Turn On Relay 2"
+          $scope.bandungLampStatus2 = false;
           sentstate = "OFF"
       };
       sendMessage (devName,relayNum,sentstate);

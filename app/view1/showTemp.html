@@ -74,11 +74,25 @@
          <center>
             <div ng-if="bandungLoading" ladda="bandungLoading"  data-spinner-size="60" data-spinner-color="#7b00e0" style="width: 132px;height: 132px;">
             </div>
-            <div google-chart chart="BandungChart" style="height:100%; width:100%;" ng-if="!bandungLoading">
+            <div class="row" style=" float: none; margin: 0 auto; ">
+               <div class="col-md-2">
+                  <div ng-if="!bandungLoading" style="margin-left: 20px;">
+                    <md-switch ng-model="bandungLampStatus1" aria-label="Switch 1" 
+                    ng-change="bandungRelay1('devicebandung','1')">
+                        <b>Relay 1</b> 
+                    </md-switch>
+                  </div>
+                  <div ng-if="!bandungLoading" style="margin-left: 20px;">
+                    <md-switch ng-model="bandungLampStatus2" aria-label="Switch 2" 
+                    ng-change="bandungRelay2('devicebandung','2')">
+                        <b>Relay 2</b> 
+                    </md-switch>
+                  </div>
+               </div>
+               <div class="col-md-10">
+                  <div google-chart chart="BandungChart" style="height:100%; width:100%;" ng-if="!bandungLoading"></div>
+               </div>
             </div>
-            <br>
-         <button class="btn btn-primary " ng-click="bandungRelay1('devicebandung','1')" ng-if="!bandungLoading">{{bandungLampStatus1}}</button>
-         <button class="btn btn-primary " ng-click="bandungRelay2('devicebandung','2')" ng-if="!bandungLoading">{{bandungLampStatus2}}</button>
          </center>
       </div>
       <div>
