@@ -35,7 +35,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
             res.Items.forEach(function(bdata){
               // console.log('WWZ1:',JSON.stringify(bdata.id));
                 var chartData = [];
-
+                debugger;
                 var stamp = new Date(bdata.timestamp);
                 chartData.push(stamp.getHours() +":"+stamp.getMinutes()+":"+stamp.getSeconds());
                 
@@ -53,7 +53,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
 
 
                 $scope.BaliChart.data.splice(0, 1, getChartHeader()); 
-                
+
               }).then(function() {
                 
                 if (typeof callback === 'function') callback();
@@ -315,5 +315,11 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
     };
 
     $scope.refreshbalilamp();
+
+    function dateParser(strDate) {
+      if(!strDate) return
+      var dateParts = strDate.split(":");
+      return new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+    }
 
 }]);
