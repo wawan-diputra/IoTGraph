@@ -147,8 +147,8 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
             direction: -1
           },
           series: {
-            0: { color: '#6288d5' },
-            1: { color: '#dc3912' }
+            0: { color: '#dc3912' },
+            1: { color: '#6288d5' }
           },
           backgroundColor: { fill:'transparent' }
         };
@@ -190,8 +190,8 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
             direction: -1
           },
           series: {
-            0: { color: '#6288d5' },
-            1: { color: '#dc3912' }
+            0: { color: '#dc3912' },
+            1: { color: '#6288d5' }
           },
           backgroundColor: { fill:'transparent' }
         };
@@ -235,8 +235,8 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
             direction: -1
           },
           series: {
-            0: { color: '#6288d5' },
-            1: { color: '#dc3912' }
+            0: { color: '#dc3912' },
+            1: { color: '#6288d5' }
           },
           backgroundColor: { fill:'transparent' }
         };
