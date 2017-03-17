@@ -1,9 +1,11 @@
 <section>
    <div  class="gray-bg dashbard-1" style="min-height: 616px;">
       <div class="row border-bottom">
-         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-               <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> Reload Graphs</a>
+         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0; background-color: #5a31b1">
+            <div class="navbar-header" style="margin-top: 10px; margin-left: 64px;">
+
+               <a href="#"><img class="img-responsive2"       
+               src="public/logo.png"></a>
             </div>
             <ul class="nav navbar-top-links navbar-right">
                <li>
@@ -81,6 +83,11 @@
             </div>
             <div class="row" style=" float: none; margin: 0 auto; ">
                <div class="col-md-2">
+                 <div ng-if="!bandungLoading" style="margin-left: 20px;">
+                    <md-switch ng-model="bandungLightStatus" aria-label="Switch 1" ng-disabled="true">
+                        <b>Light Status</b> 
+                    </md-switch>
+                 </div>
                   <div ng-if="!bandungLoading" style="margin-left: 20px;">
                     <md-switch ng-model="bandungLampStatus1" aria-label="Switch 1" 
                     ng-change="bandungRelay1('devicebandung','1')">
