@@ -15,8 +15,8 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
 
     $scope.baliLampStatus1 = false;
     $scope.baliLampStatus2 = false;
-    $scope.jogjaLampStatus1 = "Turn On Relay 1";
-    $scope.jogjaLampStatus2 = "Turn On Relay 2";
+    $scope.jogjaLampStatus1 = false;
+    $scope.jogjaLampStatus2 = false;
     $scope.bandungLampStatus1 = "Turn On Relay 1";
     $scope.bandungLampStatus2 = "Turn On Relay 2";
 
@@ -31,11 +31,11 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
 
         baliData.then(function(result) {  
             var res = JSON.parse(result.body);
-            var newBaliChart = [];
+            var newChart = [];
             res.Items.forEach(function(bdata){
               // console.log('WWZ1:',JSON.stringify(bdata.id));
                 var chartData = [];
-                debugger;
+
                 var stamp = new Date(bdata.timestamp);
                 chartData.push(stamp.getHours() +":"+stamp.getMinutes()+":"+stamp.getSeconds());
                 
@@ -43,47 +43,42 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
                 chartData.push(bdata.payload.temp);
                 chartData.push(bdata.payload.humidity);
                 chartData.push(bdata.payload.humidity);
-                newBaliChart.push(chartData);
+                newChart.push(chartData);
               });      
-                $scope.BaliChart.data = newBaliChart; 
+                $scope.BaliChart.data = newChart;
                 $scope.BaliChart.data.splice(16, $scope.BaliChart.data.length-15);
-                
-                debugger
-                if ($scope.BaliChart.data.length > 0) $scope.baliLoading = false;
-
-
                 $scope.BaliChart.data.splice(0, 1, getChartHeader()); 
-
-              }).then(function() {
-                
-                if (typeof callback === 'function') callback();
-              });
+                $scope.baliLoading = false;
+        }).then(function() {
+          
+          if (typeof callback === 'function') callback();
+        });
     }
 
-    function getJogjaData($scope, jogjaService, officeLoc) {
+    function getJogjaData($scope, jogjaService, callback) {
         var jogjaData = jogjaService.getData();
 
         jogjaData.then(function(result) {  
-          // console.log('WWZ1:',JSON.stringify(result));
-            result.Items.forEach(function(jdata){
-              
+            var newChart = [];
+            result.Items.forEach(function(bdata){
+              // console.log('WWZ1:',JSON.stringify(bdata.id));
                 var chartData = [];
-                chartData.push(jdata.id);
-                chartData.push(jdata.payload.temp);
-                chartData.push(jdata.payload.temp);
-                chartData.push(jdata.payload.humidity);
-                chartData.push(jdata.payload.humidity);
-                $scope.YogyaChart.data.push(chartData);
-                $scope.YogyaChart.data.sort(function (a, b) {
-                    if (a[0] < b[0]) return  1;
-                    if (a[0] > b[0]) return -1;
-                    if (a[2] > b[2]) return  1;
-                    if (a[2] < b[2]) return -1;
-                    return 0;
-                });   
-                $scope.YogyaChart.data.splice(31,$scope.YogyaChart.data.length-30);
+
+                var stamp = new Date(bdata.timestamp);
+                chartData.push(stamp.getHours() +":"+stamp.getMinutes()+":"+stamp.getSeconds());
+                
+                chartData.push(bdata.payload.temp);
+                chartData.push(bdata.payload.temp);
+                chartData.push(bdata.payload.humidity);
+                chartData.push(bdata.payload.humidity);
+                newChart.push(chartData);
+              });           
+                $scope.YogyaChart.data = newChart;
+                $scope.YogyaChart.data.splice(16, $scope.YogyaChart.data.length-15);
+                $scope.YogyaChart.data.splice(0, 1, getChartHeader()); 
                 $scope.yogyaLoading = false;
-              });
+        }).then(function() {
+          if (typeof callback === 'function') callback();
         });
     } 
 
@@ -135,7 +130,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
             getBaliData($scope,BaliOffice, function () {
               $scope.intervalBaliChart();
             });
-          }, 5000)
+          }, 2000)
         };
 
         $scope.intervalBaliChart();
@@ -148,12 +143,13 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
           },
           fontSize: 10,
           legend:{ position:'right' },
+          curveType: 'function',
           title: 'Mitrais - Bali Office',
           backgroundColor: { fill:'transparent' }
         };
     };
     // $scope.loadBaliChart(40);
-    setInterval($scope.loadBaliChart(), 100);
+    $scope.loadBaliChart();
     // *********************************
     // Load Yogya Office Data
     $scope.yogyaLoading = true;
@@ -163,8 +159,18 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
         $scope.YogyaChart.data = [
             [ 'Date', 'Temperature',{ role: 'Temperature' }, 'Humidity',{ role: 'Humidity' }]
         ];
-        
-        getJogjaData($scope,YogyakartaOffice,'Yogyakarta');
+
+
+        $scope.intervalJogjaChart = function(){
+          $timeout(function() {
+            getJogjaData($scope, YogyakartaOffice, function () {
+              $scope.intervalJogjaChart();
+            });
+          }, 2000);
+        };
+
+        $scope.intervalJogjaChart();
+
         $scope.YogyaChart.options = {
           titleTextStyle: {
             fontName: 'Verdana',
@@ -173,11 +179,13 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
           },
           fontSize: 10,
           legend:{ position:'right' },
+          curveType: 'function',
           title: 'Mitrais - Yogyakarta Office',
           backgroundColor: { fill:'transparent' }
         };
     };
-    $scope.loadYogyaChart(40);
+
+    $scope.loadYogyaChart();
 
     // *********************************
     // Load Bandung Office Data
@@ -229,9 +237,6 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
       };
       sendMessage (devName,relayNum,sentstate);
     }
- $scope.onChange = function() {
-    debugger
-  };
     $scope.baliRelay2 = function(devName,relayNum) {
       var sentstate;
       if ($scope.baliLampStatus2 == false) {
@@ -315,11 +320,5 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
     };
 
     $scope.refreshbalilamp();
-
-    function dateParser(strDate) {
-      if(!strDate) return
-      var dateParts = strDate.split(":");
-      return new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
-    }
 
 }]);
