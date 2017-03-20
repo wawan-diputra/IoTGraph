@@ -63,3 +63,12 @@ h5 {
     margin-top: 5px;
     font-weight: 600;
 }
+
+md-switch.md-default-theme.md-checked .md-thumb, md-switch.md-checked .md-thumb {
+  background-color: rgb(255,64,129);
+}
+
+.detail-data {
+    text-align: left;
+    margin-left: 20px;
+}

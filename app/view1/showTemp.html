@@ -30,7 +30,7 @@
                         <b>Light Status</b> 
                     </md-switch>
                  </div>
-                  <div ng-if="!baliLoading" style="margin-left: 20px;">
+                <!--  <div ng-if="!baliLoading" style="margin-left: 20px;">
                     <md-switch ng-model="baliLampStatus1" aria-label="Switch 1" 
                     ng-change="baliRelay1('devicebali','1')">
                         <b>Relay 1</b> 
@@ -41,6 +41,12 @@
                     ng-change="baliRelay2('devicebali','2')">
                         <b>Relay 2</b> 
                     </md-switch>
+                  </div> -->
+                  <div ng-if="!baliLoading" style="margin-left: 20px;">
+                       <div class="detail-data"> <b>Time: </b> {{BaliChart.data[1][0]}}</div>
+                       <div class="detail-data"> <b>Temperature: </b> {{BaliChart.data[1][1]}} &#176;C</div>
+                       <div class="detail-data"> <b>Humidity: </b> {{BaliChart.data[1][3]}} </div>
+                       
                   </div>
                </div>
                <div class="col-md-10">
@@ -59,7 +65,7 @@
                         <b>Light Status</b> 
                     </md-switch>
                  </div>
-                  <div ng-if="!yogyaLoading" style="margin-left: 20px;">
+                  <!--<div ng-if="!yogyaLoading" style="margin-left: 20px;">
                     <md-switch ng-model="jogjaLampStatus1" aria-label="Switch 1" 
                     ng-change="baliRelay1jogjaRelay1('devicejogja','1')">
                         <b>Relay 1</b> 
@@ -70,6 +76,13 @@
                     ng-change="jogjaRelay2('devicejogja','2')">
                         <b>Relay 2</b> 
                     </md-switch>
+                  </div> -->
+
+                  <div ng-if="!yogyaLoading" style="margin-left: 20px;">
+                       <div class="detail-data"> <b>Time: </b> {{YogyaChart.data[1][0]}}</div>
+                       <div class="detail-data"> <b>Temperature: </b> {{YogyaChart.data[1][1]}} &#176;C</div>
+                       <div class="detail-data"> <b>Humidity: </b> {{YogyaChart.data[1][3]}} </div>
+                       
                   </div>
                </div>
                <div class="col-md-10">
@@ -88,7 +101,7 @@
                         <b>Light Status</b> 
                     </md-switch>
                  </div>
-                  <div ng-if="!bandungLoading" style="margin-left: 20px;">
+                <!--  <div ng-if="!bandungLoading" style="margin-left: 20px;">
                     <md-switch ng-model="bandungLampStatus1" aria-label="Switch 1" 
                     ng-change="bandungRelay1('devicebandung','1')">
                         <b>Relay 1</b> 
@@ -99,6 +112,12 @@
                     ng-change="bandungRelay2('devicebandung','2')">
                         <b>Relay 2</b> 
                     </md-switch>
+                  </div> -->
+                  <div ng-if="!bandungLoading" style="margin-left: 20px;">
+                       <div class="detail-data"> <b>Time: </b> {{BandungChart.data[1][0]}}</div>
+                       <div class="detail-data"> <b>Temperature: </b> {{BandungChart.data[1][1]}} &#176;C</div>
+                       <div class="detail-data"> <b>Humidity: </b> {{BandungChart.data[1][3]}} </div>
+                       
                   </div>
                </div>
                <div class="col-md-10">
