@@ -45,10 +45,17 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
                 chartData.push(bdata.payload.humidity);
                 newChart.push(chartData);
               });      
+            debugger
                 $scope.BaliChart.data = newChart;
                 $scope.BaliChart.data.splice(16, $scope.BaliChart.data.length-15);
                 $scope.BaliChart.data.splice(0, 1, getChartHeader()); 
-                $scope.baliLoading = false;
+                
+                if ($scope.BaliChart.data.length > 1) { 
+                   $scope.baliLoading = false;
+                } else { 
+                   $scope.baliLoading = true;
+                }
+
         }).then(function() {
           
           if (typeof callback === 'function') callback();
@@ -75,7 +82,13 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
                 $scope.YogyaChart.data = newChart;
                 $scope.YogyaChart.data.splice(16, $scope.YogyaChart.data.length-15);
                 $scope.YogyaChart.data.splice(0, 1, getChartHeader()); 
-                $scope.yogyaLoading = false;
+                
+                if ($scope.YogyaChart.data.length > 1) {
+                  $scope.yogyaLoading = false;
+                } else {
+                  $scope.yogyaLoading = true;
+                }
+
         }).then(function() {
           if (typeof callback === 'function') callback();
         });
@@ -101,7 +114,13 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
                 $scope.BandungChart.data = newChart;
                 $scope.BandungChart.data.splice(16, $scope.BandungChart.data.length-15);
                 $scope.BandungChart.data.splice(0, 1, getChartHeader()); 
-                $scope.bandungLoading = false;
+                
+                if ($scope.BandungChart.data.length > 1) {
+                  $scope.bandungLoading = false;
+                } else {
+                  $scope.bandungLoading = true;
+                }
+
         }).then(function() {
           if (typeof callback === 'function') callback();
         });
@@ -128,7 +147,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
             getBaliData($scope,BaliOffice, function () {
               $scope.intervalBaliChart();
             });
-          }, 2000)
+          }, 1000)
         };
 
         $scope.intervalBaliChart();
@@ -171,7 +190,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
             getJogjaData($scope, YogyakartaOffice, function () {
               $scope.intervalJogjaChart();
             });
-          }, 2000);
+          }, 1000);
         };
 
         $scope.intervalJogjaChart();
@@ -216,7 +235,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
             getBandungData($scope, BandungOffice, function () {
               $scope.intervalBandungChart();
             });
-          }, 2000);
+          }, 1000);
         };
 
         $scope.intervalBandungChart();
@@ -329,7 +348,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
         BaliLightData.then(function(result) {  
             result.Items.forEach(function(jdata){
               jdata.lightpayload.forEach(function(value){
-                if (value.lightState == 1) {
+                if (value.lightState == 0) {
                   $scope.baliLightStatus = true;
                 }else{
                   $scope.baliLightStatus = false;
@@ -357,7 +376,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
         lightData.then(function(result) {  
             result.Items.forEach(function(jdata){
               jdata.lightpayload.forEach(function(value){
-                if (value.lightState == 1) {
+                if (value.lightState == 0) {
                   $scope.jogjaLightStatus = true;
                 }else{
                   $scope.jogjaLightStatus = false;
@@ -385,7 +404,7 @@ angular.module('myApp.view1', ['ngRoute','googlechart','angular-ladda', 'undersc
         lightData.then(function(result) {  
             result.Items.forEach(function(jdata){
               jdata.lightpayload.forEach(function(value){
-                if (value.lightState == 1) {
+                if (value.lightState == 0) {
                   $scope.bandungLightStatus = true;
                 }else{
                   $scope.bandungLightStatus = false;
